@@ -2,13 +2,17 @@ import Part from "./Part"
 
 const Content = (props) =>
 {
-return (
-    <div>
-        <Part name={props.part1.name} number_of_exercises={props.part1.exercises}/>
-        <Part name={props.part2.name} number_of_exercises={props.part2.exercises}/>
-        <Part name={props.part3.name} number_of_exercises={props.part3.exercises}/> 
-    </div>
-)
+    const arr = [];
+    for (let i = 0; i < props.parts.length; i++)
+    {
+        const temp = <Part name={props.parts[i].name} number_of_exercises={props.parts[i].exercises} />
+        arr.push(temp)
+    }
+    return (
+        <div>
+            {arr}
+        </div>
+    )
 }
 
 export default Content
