@@ -1,3 +1,5 @@
+import StatisticLine from "./StatisticLine.js";
+
 const Statistics = (props) =>
 {
     if ((props.good === 0) && (props.bad === 0) && (props.neutral === 0))
@@ -16,7 +18,7 @@ const Statistics = (props) =>
             <p>neutral {props.neutral}</p>
             <p>bad {props.bad}</p>
             <p>all {props.good + props.neutral + props.bad}</p>
-            <p>average {props.average()}</p>
+            <StatisticLine average={props.average} />
             <p>positive {(props.good) / (props.good + props.neutral + props.bad) * 100}%</p>
 
         </div>
