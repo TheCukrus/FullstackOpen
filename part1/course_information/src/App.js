@@ -1,6 +1,7 @@
 import Course from "./Course.js";
 
-const App = () => {
+const App = () =>
+{
   const course = {
     id: 1,
     name: 'Half Stack application development',
@@ -19,6 +20,11 @@ const App = () => {
         name: 'State of a component',
         exercises: 14,
         id: 3
+      },
+      {
+        name: 'Redux',
+        exercises: 11,
+        id: 4
       }
     ]
   }
