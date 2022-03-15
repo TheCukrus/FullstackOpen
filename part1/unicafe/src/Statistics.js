@@ -6,22 +6,25 @@ const Statistics = (props) =>
     {
         return (
             <div>
-                <h1>statistics</h1>
+
                 <p>No feedback given</p>
             </div>
         )
     }
     return (
-        <div>
-            <h1>statistics</h1>
-            <p>good {props.good}</p>
-            <p>neutral {props.neutral}</p>
-            <p>bad {props.bad}</p>
-            <p>all {props.good + props.neutral + props.bad}</p>
-            <StatisticLine average={props.average} />
-            <p>positive {(props.good) / (props.good + props.neutral + props.bad) * 100}%</p>
 
-        </div>
+
+        <table>
+            <tbody>
+                <StatisticLine text="good" value={props.good} />
+                <StatisticLine text="neutral" value={props.neutral} />
+                <StatisticLine text="bad" value={props.bad} />
+                <StatisticLine text="all" value={props.good + props.neutral + props.bad} />
+                <StatisticLine text="average" value={props.average} />
+                <StatisticLine text="positive" value={(props.good) / (props.good + props.neutral + props.bad) * 100} />
+            </tbody>
+        </table>
+
     )
 }
 

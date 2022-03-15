@@ -28,7 +28,8 @@ const App = () =>
     <div>
       <h2>give feedback</h2>
       <Buttons handle_good_click={handle_good_click} handle_neutral_click={handle_neutral_click} handle_bad_click={handle_bad_click} />
-      <Statistics good={good} neutral={neutral} bad={bad} average={average} />
+      <h1>statistics</h1>
+      <Statistics good={good} neutral={neutral} bad={bad} average={average()} />
     </div>
   )
 }

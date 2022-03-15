@@ -2,10 +2,13 @@ import React from "react";
 
 const StatisticLine = (props) =>
 {
+
     return (
-        <div>
-           <p>average {props.average()}</p>
-        </div>
+        <tr>
+
+           <td>{props.text}</td><td>{props.value}</td>
+
+        </tr>
     )
 }
 
