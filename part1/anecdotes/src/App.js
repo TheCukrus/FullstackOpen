@@ -29,14 +29,47 @@ const App = () =>
 
   }
 
+  const most_voted = () =>
+  {
+    let temp = arr_of_votes[0]
+    for (let i = 0; i < arr_of_votes.length; i++)
+    {
+      if (temp < arr_of_votes[i])
+      {
+        temp = arr_of_votes[i]
+      }
+    }
+    return temp;
+  }
+
+  const temp1 = () =>
+  {
+    let count = 0;
+    let temp = arr_of_votes[0]
+    for (let i = 0; i < arr_of_votes.length; i++)
+    {
+      if (temp < arr_of_votes[i])
+      {
+        temp = arr_of_votes[i]
+       count = i
+      }
+    }
+    return count;
+  }
+
 
   return (
     <div>
+      <h1>Anecdote of the day</h1>
       {anecdotes[selected]}<br />
 
       <p>has {arr_of_votes[selected]} votes</p>
       <button onClick={handle_vote_add} >vote</button>
       <button onClick={handle_random_click}>next anecdote</button>
+
+      <h1>Anecdote with most votes</h1>
+      {anecdotes[temp1()]}
+      <p>has {most_voted()} votes</p>
     </div>
   )
 }
