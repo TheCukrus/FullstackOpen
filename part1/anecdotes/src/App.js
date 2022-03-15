@@ -13,7 +13,7 @@ const App = () =>
   ]
 
   const [selected, setSelected] = useState(0)
-
+  const [arr_of_votes, set_arr_of_votes] = useState([0, 0, 0, 0, 0, 0, 0])
 
   const handle_random_click = () =>
   {
@@ -21,9 +21,21 @@ const App = () =>
     setSelected(temp)
   }
 
+  const handle_vote_add = () =>
+  {
+    const votes_copy = [...arr_of_votes];
+    votes_copy[selected]++
+    set_arr_of_votes(votes_copy)
+
+  }
+
+
   return (
     <div>
       {anecdotes[selected]}<br />
+
+      <p>has {arr_of_votes[selected]} votes</p>
+      <button onClick={handle_vote_add} >vote</button>
       <button onClick={handle_random_click}>next anecdote</button>
     </div>
   )
