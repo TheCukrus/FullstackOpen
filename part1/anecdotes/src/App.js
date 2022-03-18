@@ -57,7 +57,7 @@ const App = () =>
     return count;
   }
 
-
+  
   return (
     <div>
       <h1>Anecdote of the day</h1>
