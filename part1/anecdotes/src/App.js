@@ -68,7 +68,7 @@ const App = () =>
       <button onClick={handle_random_click}>next anecdote</button>
 
       <h1>Anecdote with most votes</h1>
-      {anecdotes[temp1()]}
+      {anecdotes[temp1()]} 
       <p>has {most_voted()} votes</p> 
     </div>
   )
