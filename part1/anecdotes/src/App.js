@@ -69,7 +69,7 @@ const App = () =>
 
       <h1>Anecdote with most votes</h1>
       {anecdotes[temp1()]}
-      <p>has {most_voted()} votes</p>
+      <p>has {most_voted()} votes</p> 
     </div>
   )
 }
