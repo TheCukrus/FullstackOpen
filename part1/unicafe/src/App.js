@@ -19,7 +19,7 @@ const App = () =>
     let sum = 0;
     sum = sum + good;
     sum = sum - bad;
-    sum = sum / (good + neutral + bad)
+    sum = sum / (good + neutral + bad) 
     return sum;
 
 
