@@ -1,6 +1,9 @@
 import { useState } from 'react'
 import Add_to_phonebook from './Add_to_phonebook'
 import Search_filter from './Search_filter'
+import axios from "axios";
+import Persons from './Persons';
+
 
 const App = () =>
 {
@@ -37,31 +40,27 @@ const App = () =>
 
   const handle_name_change = (event) => setNewName(event.target.value);
   const handle_number_change = (event) => setNewNumber(event.target.value)
-
   const handle_filter_change = (event) => set_filter_persons(event.target.value)
 
-  const temp1 = [];
-  const regex1 = new RegExp(filter_persons, "i");
-
-  for (let i = 0; i < persons.length; i++)
-  {
-    if (regex1.test(persons[i].name))
-    {
-      temp1.push(<p key={i}>{persons[i].name} {persons[i].number}</p>)
-    }
-  }
 
 
+
+  const promise = axios.get("http://localhost:3001/persons")
+
+  console.log(promise)
   return (
     <div>
       <h2>Phonebook</h2>
 
       <Search_filter handle_filter_change={handle_filter_change} />
+      <h1>add a new</h1>
+
       <Add_to_phonebook handle_click={handle_click} handle_name_change={handle_name_change} handle_number_change={handle_number_change} />
 
       <h2>Numbers</h2>
 
-      {temp1}
+      <Persons  persons={persons} filter_persons={filter_persons}/>
+
     </div>
   )
 }
