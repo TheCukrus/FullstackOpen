@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import Add_to_phonebook from './Add_to_phonebook'
+import Search_filter from './Search_filter'
 
 const App = () =>
 {
@@ -39,8 +41,8 @@ const App = () =>
   const handle_filter_change = (event) => set_filter_persons(event.target.value)
 
   const temp1 = [];
-  const regex1 = new RegExp(filter_persons,"i");
-  
+  const regex1 = new RegExp(filter_persons, "i");
+
   for (let i = 0; i < persons.length; i++)
   {
     if (regex1.test(persons[i].name))
@@ -54,18 +56,12 @@ const App = () =>
     <div>
       <h2>Phonebook</h2>
 
-      <p>filter shown with <input onChange={handle_filter_change} /></p>
+      <Search_filter handle_filter_change={handle_filter_change} />
+      <Add_to_phonebook handle_click={handle_click} handle_name_change={handle_name_change} handle_number_change={handle_number_change} />
 
-      <form onSubmit={handle_click} >
-        <h1>add a new</h1>
-        <div>name: <input onChange={handle_name_change} /></div>
-        <div>number: <input onChange={handle_number_change} /></div>
-        <div><button type="submit" >add</button></div>
-      </form>
       <h2>Numbers</h2>
 
       {temp1}
-      {/* {persons.map((ele, i) => <p key={i}>{ele.name} {ele.number}</p>)} */}
     </div>
   )
 }
