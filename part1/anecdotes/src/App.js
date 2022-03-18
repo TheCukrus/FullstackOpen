@@ -50,7 +50,7 @@ const App = () =>
     {
       if (temp < arr_of_votes[i])
       {
-        temp = arr_of_votes[i]
+        temp = arr_of_votes[i] 
        count = i
       }
     }
