@@ -13,7 +13,7 @@ const Country = (props) =>
     {
         if (regexp.test(props.countries[i].name.common))
         {
-            country_arr.push(<p key={i}>{props.countries[i].name.common}</p>)
+            country_arr.push(<p key={i}>{props.countries[i].name.common} <button onClick={()=>props.set_filter_country(props.countries[i].name.common)}>show</button></p>)
 
         }
         if (country_arr.length > 10)
@@ -42,7 +42,7 @@ const Country = (props) =>
         {
             //   console.log(temp, country1.languages[temp])
             arr_languages.push(<li key={++a}>{country1.languages[temp]}</li>)
-        }
+        }//isvedamos kalbos
 
         return (
             <div>
