@@ -52,4 +52,19 @@ const update = async (id, new_client_obj) =>
     }
 }
 
+const remove = async (id) =>
+{
+    try
+    {
+        const result1 = await axios({
+            method: 'delete',
+            url: `${baseUrl}/${id}`
+        })
+    }
+    catch (err)
+    {
+        console.log()
+    }
+}
+
 export default { getAll, create, update }
