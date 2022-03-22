@@ -1,4 +1,5 @@
 import React from "react";
+import Weather from "./Weather";
 
 const Country = (props) =>
 {
@@ -13,7 +14,7 @@ const Country = (props) =>
     {
         if (regexp.test(props.countries[i].name.common))
         {
-            country_arr.push(<p key={i}>{props.countries[i].name.common} <button onClick={()=>props.set_filter_country(props.countries[i].name.common)}>show</button></p>)
+            country_arr.push(<p key={i}>{props.countries[i].name.common} <button onClick={() => props.set_filter_country(props.countries[i].name.common)}>show</button></p>)
 
         }
         if (country_arr.length > 10)
@@ -53,7 +54,9 @@ const Country = (props) =>
                 <ul>
                     {arr_languages}
                 </ul>
-              <img src={country1.flags["png"]}/>
+                <img src={country1.flags["png"]} />
+
+                <Weather country1={country1} />
             </div>
         )
     }

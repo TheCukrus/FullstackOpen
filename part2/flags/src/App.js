@@ -4,6 +4,7 @@ import Country from "./Coutry";
 
 function App()
 {
+  const api_key = process.env.REACT_APP_API_KEY;
   const [filter_country, set_filter_country] = useState("")
   const [countries, set_countries] = useState("")
 
@@ -38,7 +39,7 @@ function App()
       <p>find countries <input onChange={handle_filter_country} /></p>
       {country_filter}
       <Country countries={countries} filter_country={filter_country} set_filter_country={set_filter_country} />
-
+<p>{api_key}</p>
     </div>
   );
 }
