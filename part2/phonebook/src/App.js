@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import Add_to_phonebook from './Add_to_phonebook'
 import Search_filter from './Search_filter'
-import axios from "axios";
 import Persons from './Persons';
 import services_persons from './services/services_persons';
 
@@ -30,14 +29,11 @@ const App = () =>
     // const temp_arr = [...persons]
     // temp_arr.push({ name: newName, number: newNumber });
     // setPersons(temp_arr);
-    const temp = await axios({
-      method: "post",
-      url: "http://localhost:3001/persons",
-      data: {
-        name: newName,
-        number: newNumber
-      }
+    services_persons.create({
+      name: newName,
+      number: newNumber
     })
+    
     fetch_server_data()
 
   }

@@ -1,5 +1,5 @@
 import axios from "axios";
-const baseUrl = "https://localhost:3001/persons"
+const baseUrl = "http://localhost:3001/persons"
 
 
 const getAll = async () =>
@@ -27,6 +27,7 @@ const create = async (client_obj) =>
             url: baseUrl,
             data: client_obj
         })
+        return result1;
     }
     catch (err)
     {
@@ -34,5 +35,21 @@ const create = async (client_obj) =>
     }
 }
 
+const update = async (id, new_client_obj) =>
+{
+    try
+    {
+        const result1 = await axios({
+            method: "put",
+            url: `${baseUrl}/${id}`,
+            data: new_client_obj
+        })
+        return result1
+    }
+    catch (err)
+    {
+        console.log(err);
+    }
+}
 
-export default { getAll, create }
+export default { getAll, create, update }
