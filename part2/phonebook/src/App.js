@@ -3,6 +3,7 @@ import Add_to_phonebook from './Add_to_phonebook'
 import Search_filter from './Search_filter'
 import axios from "axios";
 import Persons from './Persons';
+import services_persons from './services/services_persons';
 
 
 const App = () =>
@@ -49,16 +50,10 @@ const App = () =>
 
   const fetch_server_data = async () =>
   {
-    try
-    {
-      const result1 = await axios.get("http://localhost:3001/persons")
-      set_server_data(result1.data)
-      console.log(result1.data)
-    }
-    catch (err)
-    {
-      console.log(err);
-    }
+    const result1 = await services_persons.getAll()
+    set_server_data(result1.data)
+    console.log(result1.data)
+
   }
 
   useEffect(fetch_server_data, [])
