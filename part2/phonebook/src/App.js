@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Add_to_phonebook from './Add_to_phonebook'
 import Search_filter from './Search_filter'
 import axios from "axios";
@@ -7,35 +7,38 @@ import Persons from './Persons';
 
 const App = () =>
 {
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '040-123456', id: 1 },
-    { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
-    { name: 'Dan Abramov', number: '12-43-234345', id: 3 },
-    { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }
-  ])
-
-
+  //userStates
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState("")
   const [filter_persons, set_filter_persons] = useState("")
+  const [server_data, set_server_data] = useState("")
 
 
 
-  const handle_click = (event) =>
+  const handle_click = async (event) =>
   {
     event.preventDefault()
 
-    for (let i = 0; i < persons.length; i++)
+    for (let i = 0; i < server_data.length; i++)
     {
-      if (newName === persons[i].name)
+      if (newName === server_data[i].name)
       {
         return alert(`${newName} is already added to phonebook`)
       }
-
     }
-    const temp_arr = [...persons]
-    temp_arr.push({ name: newName, number: newNumber });
-    setPersons(temp_arr);
+    // const temp_arr = [...persons]
+    // temp_arr.push({ name: newName, number: newNumber });
+    // setPersons(temp_arr);
+    const temp = await axios({
+      method: "post",
+      url: "http://localhost:3001/persons",
+      data: {
+        name: newName,
+        number: newNumber
+      }
+    })
+    fetch_server_data()
+
   }
 
   const handle_name_change = (event) => setNewName(event.target.value);
@@ -44,10 +47,21 @@ const App = () =>
 
 
 
+  const fetch_server_data = async () =>
+  {
+    try
+    {
+      const result1 = await axios.get("http://localhost:3001/persons")
+      set_server_data(result1.data)
+      console.log(result1.data)
+    }
+    catch (err)
+    {
+      console.log(err);
+    }
+  }
 
-  const promise = axios.get("http://localhost:3001/persons")
-
-  console.log(promise)
+  useEffect(fetch_server_data, [])
   return (
     <div>
       <h2>Phonebook</h2>
@@ -59,7 +73,7 @@ const App = () =>
 
       <h2>Numbers</h2>
 
-      <Persons  persons={persons} filter_persons={filter_persons}/>
+      <Persons filter_persons={filter_persons} server_data={server_data} />
 
     </div>
   )
