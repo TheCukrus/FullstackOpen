@@ -39,7 +39,6 @@ function App()
       <p>find countries <input onChange={handle_filter_country} /></p>
       {country_filter}
       <Country countries={countries} filter_country={filter_country} set_filter_country={set_filter_country} />
-<p>{api_key}</p>
     </div>
   );
 }
