@@ -7,5 +7,9 @@
     },
     "scripts": {
         "start": "npx json-server ./part2/phonebook/db.json"
+    },
+    "engines": {
+        "node": ">=6.0.0"
     }
+    
 }
