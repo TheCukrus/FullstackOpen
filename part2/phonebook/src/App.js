@@ -23,7 +23,15 @@ const App = () =>
     {
       if (newName === server_data[i].name)
       {
-        return alert(`${newName} is already added to phonebook`)
+        // return alert(`${newName} is already added to phonebook`)
+        if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) 
+        {
+          services_persons.update(
+            {
+              number: newNumber
+            }
+          )
+        }
       }
     }
     // const temp_arr = [...persons]
@@ -33,7 +41,7 @@ const App = () =>
       name: newName,
       number: newNumber
     })
-    
+
     fetch_server_data()
 
   }
@@ -64,7 +72,7 @@ const App = () =>
 
       <h2>Numbers</h2>
 
-      <Persons filter_persons={filter_persons} server_data={server_data} fetch_server_data={fetch_server_data}  />
+      <Persons filter_persons={filter_persons} server_data={server_data} fetch_server_data={fetch_server_data} />
 
     </div>
   )
