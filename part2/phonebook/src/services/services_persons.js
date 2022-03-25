@@ -60,6 +60,7 @@ const remove = async (id) =>
             method: 'delete',
             url: `${baseUrl}/${id}`
         })
+        return result1;
     }
     catch (err)
     {
@@ -67,4 +68,4 @@ const remove = async (id) =>
     }
 }
 
-export default { getAll, create, update }
+export default { getAll, create, update, remove }

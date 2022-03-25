@@ -64,7 +64,7 @@ const App = () =>
 
       <h2>Numbers</h2>
 
-      <Persons filter_persons={filter_persons} server_data={server_data} />
+      <Persons filter_persons={filter_persons} server_data={server_data} fetch_server_data={fetch_server_data}  />
 
     </div>
   )

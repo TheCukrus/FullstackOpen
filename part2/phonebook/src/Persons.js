@@ -1,4 +1,5 @@
 import React from "react";
+import services_persons from "./services/services_persons";
 
 const Persons = (props) =>
 {
@@ -10,8 +11,19 @@ const Persons = (props) =>
     {
         if (regex1.test(props.server_data[i].name))
         {
-            // temp1.push(<p key={i}>{props.persons[i].name} {props.persons[i].number}</p>)
-             temp1.push(<p key={i}>{props.server_data[i].name} {props.server_data[i].number}</p>)
+            temp1.push(<p key={i}>{props.server_data[i].name} {props.server_data[i].number} <button onClick={() =>
+            {
+                
+                if ( window.confirm(`delete ${props.server_data[i].name}`) )
+                {
+                    services_persons.remove(props.server_data[i].id)
+                    props.fetch_server_data()
+                }
+                else
+                {
+
+                }
+            }}>delete</button></p>)
 
         }
     }
