@@ -6,7 +6,7 @@
         "json-server": "^0.17.0"
     },
     "scripts": {
-        "start": "npx json-server --watch ./part2/phonebook/db.json --port 3001"
+        "start": "npx json-server --watch ./part2/phonebook/db.json --port process.env.PORT"
     },
     "engines": {
         "node": ">=6.0.0"
