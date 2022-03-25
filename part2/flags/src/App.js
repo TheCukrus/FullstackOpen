@@ -17,8 +17,9 @@ function App()
       console.log(result1.data)
     }
     catch (err)
-    {
+    { 
       console.log(err)
+      //komentaras
     }
   }
   const handle_filter_country = (event) => set_filter_country(event.target.value)
