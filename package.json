@@ -1,0 +1,11 @@
+{
+    "name": "flags",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+        "json-server": "^0.17.0"
+    },
+    "scripts": {
+        "start": "npx json-server ./part2/phonebook/db.json"
+    }
+}
