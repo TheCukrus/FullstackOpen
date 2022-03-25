@@ -10,8 +10,7 @@
     },
     "scripts": {
         "start": "npm-run-all --parallel start_node start_json-server",
-        "start_node": "node app.js",
-        "start_json-server": "npx json-server --watch ./part2/phonebook/db.json --port 3001"
+        "start_node": "node app.js&npx json-server --watch ./part2/phonebook/db.json --port 3001"
     },
     "engines": {
         "node": ">=16.0.0"
