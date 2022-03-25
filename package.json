@@ -10,7 +10,7 @@
     },
     "scripts": {
         "start_json-server": "npx json-server --watch ./part2/phonebook/db.json --port 3001",
-        "start": "node app.js"
+        "start": "node App.js"
 
     },
     "engines": {
