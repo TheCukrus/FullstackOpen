@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
-import Add_to_phonebook from './Add_to_phonebook'
-import Search_filter from './Search_filter'
-import Persons from './Persons';
-import services_persons from './services/services_persons';
-import Notification from './Notification';
+import Add_to_phonebook from './Add_to_phonebook.js'
+import Search_filter from './Search_filter.js'
+import Persons from './Persons.js';
+import services_persons from './services/services_persons.js';
+import Notification from './Notification.js';
 import "./index.css"
-import ErrorMessage from './ErrorMessage';
+import ErrorMessage from './ErrorMessage.js';
 
 
 const App = () =>

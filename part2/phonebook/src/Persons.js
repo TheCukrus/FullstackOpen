@@ -1,5 +1,5 @@
 import React from "react";
-import services_persons from "./services/services_persons";
+import services_persons from "./services/services_persons.js";
 
 const Persons = (props) =>
 {
