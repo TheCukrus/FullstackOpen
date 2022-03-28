@@ -3,6 +3,8 @@ import Add_to_phonebook from './Add_to_phonebook'
 import Search_filter from './Search_filter'
 import Persons from './Persons';
 import services_persons from './services/services_persons';
+import Notification from './Notification';
+import "./index.css"
 
 
 const App = () =>
@@ -12,7 +14,7 @@ const App = () =>
   const [newNumber, setNewNumber] = useState("")
   const [filter_persons, set_filter_persons] = useState("")
   const [server_data, set_server_data] = useState("")
-
+  const [errorMessage, setErrorMessage] = useState("")
 
 
   const handle_click = async (event) =>
@@ -27,11 +29,13 @@ const App = () =>
         if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) 
         {
           await services_persons.update(
-            services_persons[i].id,
+            server_data[i].id,
             {
               number: newNumber
             }
-          )
+          ).then(() => fetch_server_data())
+          setErrorMessage(`updated ${newName}`)
+          return
         }
       }
     }
@@ -41,12 +45,16 @@ const App = () =>
     services_persons.create({
       name: newName,
       number: newNumber
-    })
+    }).then(() => fetch_server_data())
+    setErrorMessage(`added ${newName}`)
+
+
 
     fetch_server_data()
 
   }
 
+  //functions
   const handle_name_change = (event) => setNewName(event.target.value);
   const handle_number_change = (event) => setNewNumber(event.target.value)
   const handle_filter_change = (event) => set_filter_persons(event.target.value)
@@ -67,6 +75,7 @@ const App = () =>
       <h2>Phonebook</h2>
 
       <Search_filter handle_filter_change={handle_filter_change} />
+      <Notification message={errorMessage} setErrorMessage={setErrorMessage} />
       <h1>add a new</h1>
 
       <Add_to_phonebook handle_click={handle_click} handle_name_change={handle_name_change} handle_number_change={handle_number_change} />

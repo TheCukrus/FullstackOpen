@@ -1,7 +1,7 @@
 import React from "react";
 import services_persons from "./services/services_persons";
 
-const Persons =  (props) =>
+const Persons = (props) =>
 {
     const temp1 = [];
 
@@ -13,16 +13,16 @@ const Persons =  (props) =>
         {
             temp1.push(<p key={i}>{props.server_data[i].name} {props.server_data[i].number} <button onClick={() =>
             {
-                
-                if ( window.confirm(`delete ${props.server_data[i].name}`) )
-                {
-                    services_persons.remove(props.server_data[i].id)
-                    props.fetch_server_data()
-                }
-                else
-                {
 
+                if (window.confirm(`delete ${props.server_data[i].name}`))
+                {
+                    services_persons.remove(props.server_data[i].id).then(() =>  
+                    {
+                        props.fetch_server_data()
+
+                    })
                 }
+
             }}>delete</button></p>)
 
         }
