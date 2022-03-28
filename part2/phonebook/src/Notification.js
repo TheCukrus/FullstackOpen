@@ -2,7 +2,7 @@
 const Notification = (props) =>
 {
 
-    setTimeout(() => props.setErrorMessage(null), 5000)
+    setTimeout(() => props.setNotification(null), 5000)
 
     if (props.message === null)
     {
@@ -11,7 +11,7 @@ const Notification = (props) =>
 
 
     return (
-        <div className="error">
+        <div className="notification">
             {props.message}
 
         </div>

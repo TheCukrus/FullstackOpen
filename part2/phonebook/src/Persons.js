@@ -11,16 +11,22 @@ const Persons = (props) =>
     {
         if (regex1.test(props.server_data[i].name))
         {
-            temp1.push(<p key={i}>{props.server_data[i].name} {props.server_data[i].number} <button onClick={() =>
+            temp1.push(<p key={i}>{props.server_data[i].name} {props.server_data[i].number} <button onClick={async() =>
             {
 
                 if (window.confirm(`delete ${props.server_data[i].name}`))
                 {
-                    services_persons.remove(props.server_data[i].id).then(() =>  
+                    try
                     {
-                        props.fetch_server_data()
+                       await services_persons.remove(props.server_data[i].id)
+                       props.setNotification(`deleted ${props.server_data[i].name}`)
+                    }
+                    catch(err)
+                    {
+                        props.setErrorMessage(err.message)
+                    }
+                  
 
-                    })
                 }
 
             }}>delete</button></p>)

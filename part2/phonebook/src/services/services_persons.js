@@ -15,6 +15,7 @@ const getAll = async () =>
     catch (err)
     {
         console.log(err);
+        return err;
     }
 }
 
@@ -32,6 +33,7 @@ const create = async (client_obj) =>
     catch (err)
     {
         console.log(err);
+        return err;
     }
 }
 
@@ -49,23 +51,20 @@ const update = async (id, new_client_obj) =>
     catch (err)
     {
         console.log(err);
+        return err;
     }
 }
 
 const remove = async (id) =>
 {
-    try
-    {
+  
         const result1 = await axios({
             method: 'delete',
             url: `${baseUrl}/${id}`
         })
         return result1;
-    }
-    catch (err)
-    {
-        console.log()
-    }
+    
+    
 }
 
 export default { getAll, create, update, remove }
