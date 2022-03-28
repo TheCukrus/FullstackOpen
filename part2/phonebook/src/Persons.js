@@ -1,7 +1,7 @@
 import React from "react";
 import services_persons from "./services/services_persons";
 
-const Persons = (props) =>
+const Persons =  (props) =>
 {
     const temp1 = [];
 

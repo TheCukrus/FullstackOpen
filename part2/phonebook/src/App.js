@@ -26,7 +26,8 @@ const App = () =>
         // return alert(`${newName} is already added to phonebook`)
         if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) 
         {
-          services_persons.update(
+          await services_persons.update(
+            services_persons[i].id,
             {
               number: newNumber
             }

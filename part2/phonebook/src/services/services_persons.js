@@ -40,7 +40,7 @@ const update = async (id, new_client_obj) =>
     try
     {
         const result1 = await axios({
-            method: "put",
+            method: 'patch',
             url: `${baseUrl}/${id}`,
             data: new_client_obj
         })
