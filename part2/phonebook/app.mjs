@@ -24,11 +24,6 @@ const phonebook = [
         "id": 4,
         "name": "Mary Poppendieck",
         "number": "39-23-6423122"
-    },
-    {
-        "id": 5,
-        "name": "temptemp",
-        "number": "1"
     }
 ]
 
@@ -79,13 +74,31 @@ const func4 = (req, res) =>
     res.end();
 }
 
+const func5 = (req, res) =>
+{
+    const id = Math.floor(Math.random() * 10000000);
+
+    const newname = {
+        "id": id,
+        "name": req.body.name,
+        "number": req.body.number
+    }
+  phonebook.push(newname);
+console.log(req)
+    
+    res.write("pavyko");
+    res.end();
+}
+
 app.use(cors());
+app.use(express.json())
 
 //endpoints
 app.get("/api/persons", func1);
-app.get("/info", func2)
-app.get("/api/persons/:id", func3)
-app.delete("/api/persons/:id", func4)
+app.get("/info", func2);
+app.get("/api/persons/:id", func3);
+app.delete("/api/persons/:id", func4);
+app.post("/api/persons", func5);
 
 
 //server listening
