@@ -1,7 +1,6 @@
 
 const ErrorMessage = (props) =>
 {
-    console.log(props)
      setTimeout(() => props.setErrorMessage(null), 5000)
 
     if (props.message === null)

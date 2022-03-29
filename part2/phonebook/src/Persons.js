@@ -1,4 +1,3 @@
-import React from "react";
 import services_persons from "./services/services_persons.js";
 
 const Persons = (props) =>
@@ -20,6 +19,7 @@ const Persons = (props) =>
                     {
                        await services_persons.remove(props.server_data[i].id)
                        props.setNotification(`deleted ${props.server_data[i].name}`)
+                       props.fetch_server_data()
                     }
                     catch(err)
                     {
@@ -33,7 +33,6 @@ const Persons = (props) =>
 
         }
     }
-
     return (
         <div>
             {temp1}

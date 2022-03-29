@@ -62,16 +62,22 @@ const func3 = (req, res) =>
 }
 
 const func4 = (req, res) =>
-{
+{//deleting
     //sting to number
-    const temp0 = parseInt(req.params.id);
+    const req_id_parsed = parseInt(req.params.id);
     //filtering id
-    const temp = phonebook.filter((ele) => ele.id === temp0)
+    // const temp = phonebook.filter((ele) => ele.id === temp0)
 
-    //deleting post
-    phonebook.splice(temp0 - 1, 1);
-    res.write("deleting")
-    res.end();
+    for (let i = 0; i < phonebook.length; i++)
+    {
+        if (phonebook[i].id === req_id_parsed)
+        {
+            phonebook.splice(i, 1);
+            res.write("deleting");
+            res.end();
+            return;
+        }
+    }
 }
 
 const func5 = (req, res) =>
@@ -113,6 +119,26 @@ const func5 = (req, res) =>
         res.end();
     }
 }
+
+// const func6 = (req, res) =>
+// {
+//     console.log(req)
+//     // temp = parseInt(req.params.id);
+
+//     for (let i = 0; i < phonebook.length; i++)
+//     {
+//         if(phonebook[i].id === req.params.id)
+//         {
+//             phonebook[i].number = req.body.number;
+//             res.write("atnaujino");
+//             res.end();
+//             return;
+//         }
+//     }
+//     res.write("nerastas id");
+//     res.end();
+// }
+
 //new token "morgen"
 morgan.token("body", function (req, res)
 {
@@ -124,8 +150,9 @@ morgan.token("body", function (req, res)
 
 })
 
+
 //middlewares
-// app.use(cors());
+app.use(cors());
 app.use(express.json())
 app.use(morgan(":body :method :url :status :res[content-length] - :response-time ms"))
 
@@ -136,6 +163,7 @@ app.get("/info", func2);
 app.get("/api/persons/:id", func3);
 app.delete("/api/persons/:id", func4);
 app.post("/api/persons", func5);
+// app.patch("/api/persons/:id", func6);
 
 
 //server listening
