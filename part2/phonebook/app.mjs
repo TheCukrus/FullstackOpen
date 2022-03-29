@@ -24,6 +24,11 @@ const phonebook = [
         "id": 4,
         "name": "Mary Poppendieck",
         "number": "39-23-6423122"
+    },
+    {
+        "id": 5,
+        "name": "temptemp",
+        "number": "1"
     }
 ]
 
@@ -57,12 +62,22 @@ const func3 = (req, res) =>
         res.end();
         return
     }
-
     res.json(temp);
     res.end();
-
 }
 
+const func4 = (req, res) =>
+{
+    //sting to number
+    const temp0 = parseInt(req.params.id);
+    //filtering id
+    const temp = phonebook.filter((ele) => ele.id === temp0)
+
+    //deleting post
+    phonebook.splice(temp0 - 1, 1);
+    res.write("deleting")
+    res.end();
+}
 
 app.use(cors());
 
@@ -70,6 +85,7 @@ app.use(cors());
 app.get("/api/persons", func1);
 app.get("/info", func2)
 app.get("/api/persons/:id", func3)
+app.delete("/api/persons/:id", func4)
 
 
 //server listening
