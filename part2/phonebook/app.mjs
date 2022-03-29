@@ -38,15 +38,39 @@ const func1 = (req, res) =>
 const func2 = (req, res) =>
 {
 
-const temp = `Phonebook has info for ${phonebook.length} people
+    const temp = `Phonebook has info for ${phonebook.length} people
  \n ${new Date()}`;
     res.write(temp);
     res.end();
 }
 
+const func3 = (req, res) =>
+{
+    //sting to number
+    const temp0 = parseInt(req.params.id);
+    //filtering id
+    const temp = phonebook.filter((ele) => ele.id === temp0)
+
+    if (temp.length === 0)
+    {
+        res.statusCode = 404;
+        res.end();
+        return
+    }
+
+    res.json(temp);
+    res.end();
+
+}
+
+
 app.use(cors());
 
+//endpoints
 app.get("/api/persons", func1);
 app.get("/info", func2)
+app.get("/api/persons/:id", func3)
 
+
+//server listening
 app.listen(3001, "127.0.0.1");
