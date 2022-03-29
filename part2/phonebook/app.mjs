@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import morgan from "morgan";
 
 const app = express();
 
@@ -114,8 +115,9 @@ const func5 = (req, res) =>
 }
 
 //middlewares
-app.use(cors());
+// app.use(cors());
 app.use(express.json())
+app.use(morgan("tiny"))
 
 //endpoints
 app.get("/api/persons", func1);
