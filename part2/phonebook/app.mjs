@@ -1,5 +1,4 @@
 import express from "express";
-import fs from "fs";
 import cors from "cors";
 
 const app = express();
@@ -83,13 +82,38 @@ const func5 = (req, res) =>
         "name": req.body.name,
         "number": req.body.number
     }
-  phonebook.push(newname);
-console.log(req)
-    
-    res.write("pavyko");
-    res.end();
+
+    if (req.body.name === undefined)
+    {
+        res.statusCode = 418;
+        res.write("nera vardo");
+        res.end();
+    }
+    else if (req.body.number === undefined)
+    {
+        res.statusCode = 418;
+        res.write("nera numerio");
+        res.end();
+    }
+    else
+    {
+        for (let i = 0; i < phonebook.length; i++)
+        {
+            if(req.body.name === phonebook[i]["name"])
+            {
+                res.statusCode = 418;
+                res.json({error: "name must be unique"});
+                res.end();
+                return;
+            }
+        }
+        phonebook.push(newname);
+        res.write("pavyko");
+        res.end();
+    }
 }
 
+//middlewares
 app.use(cors());
 app.use(express.json())
 
