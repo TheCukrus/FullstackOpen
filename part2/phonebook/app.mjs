@@ -100,10 +100,10 @@ const func5 = (req, res) =>
     {
         for (let i = 0; i < phonebook.length; i++)
         {
-            if(req.body.name === phonebook[i]["name"])
+            if (req.body.name === phonebook[i]["name"])
             {
                 res.statusCode = 418;
-                res.json({error: "name must be unique"});
+                res.json({ error: "name must be unique" });
                 res.end();
                 return;
             }
@@ -113,11 +113,22 @@ const func5 = (req, res) =>
         res.end();
     }
 }
+//new token "morgen"
+morgan.token("body", function (req, res)
+{
+    if (req.body === undefined)
+    {
+        return;
+    }
+    return JSON.stringify(req.body);
+
+})
 
 //middlewares
 // app.use(cors());
 app.use(express.json())
-app.use(morgan("tiny"))
+app.use(morgan(":body :method :url :status :res[content-length] - :response-time ms"))
+
 
 //endpoints
 app.get("/api/persons", func1);
