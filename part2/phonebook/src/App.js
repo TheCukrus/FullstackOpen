@@ -19,57 +19,7 @@ const App = () =>
   const [notification, setNotification] = useState(null)
 
 
-  const handle_click = async (event) =>
-  {
-    event.preventDefault()
 
-    for (let i = 0; i < server_data.length; i++)
-    {
-      if (newName === server_data[i].name)
-      {
-        // return alert(`${newName} is already added to phonebook`)
-        if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) 
-        {
-          const temp = await services_persons.update(
-            server_data[i].id,
-            {
-              number: newNumber
-            }
-          )
-          if (temp.message !== undefined)
-          {
-            setErrorMessage(temp.message)
-            return;
-          }
-          else
-          {
-            setNotification(`updated ${newName}`)
-          }
-          (() => fetch_server_data())()
-        }
-      }
-    }
-    // const temp_arr = [...persons]
-    // temp_arr.push({ name: newName, number: newNumber });
-    // setPersons(temp_arr);
-    const result0 = await services_persons.create({
-      name: newName,
-      number: newNumber
-    })
-    if (result0.message !== undefined)
-    {
-      setErrorMessage(result0.message)
-    }
-    else 
-    {
-      setNotification(`added ${newName}`)
-    }
-
-
-
-    fetch_server_data()
-
-  }
 
   //functions
   const handle_name_change = (event) => setNewName(event.target.value);
@@ -95,7 +45,14 @@ const App = () =>
       <Search_filter handle_filter_change={handle_filter_change} />
       <h1>add a new</h1>
 
-      <Add_to_phonebook handle_click={handle_click} handle_name_change={handle_name_change} handle_number_change={handle_number_change} />
+      <Add_to_phonebook
+        newName={newName}
+        server_data={server_data}
+        handle_name_change={handle_name_change}
+        handle_number_change={handle_number_change}
+        setErrorMessage={setErrorMessage}
+        setNotification={setNotification}
+      />
 
       <h2>Numbers</h2>
 

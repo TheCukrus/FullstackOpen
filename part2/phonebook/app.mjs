@@ -1,6 +1,8 @@
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
+import model_persons from "./models/person.js";
+import mongoose from "mongoose";
 
 const app = express();
 
@@ -27,57 +29,62 @@ const phonebook = [
     }
 ]
 
-const func1 = (req, res) =>
+const func1 = async (req, res) =>
 {
     // const result1 = fs.readFileSync("./FullstackOpen/part2/phonebook/db.json", "utf-8");
     // const parsed = JSON.parse(result1);
-    res.json(phonebook);
+    const temp1 = await model_persons.find()
+    res.json(temp1);
     res.end();
 }
 
 const func2 = (req, res) =>
 {
 
-    const temp = `Phonebook has info for ${phonebook.length} people
+    const temp = `Phonebook has info for ${model_persons.length} people
  \n ${new Date()}`;
     res.write(temp);
     res.end();
 }
 
-const func3 = (req, res) =>
+const func3 = async (req, res) =>
 {
     //sting to number
-    const temp0 = parseInt(req.params.id);
-    //filtering id
-    const temp = phonebook.filter((ele) => ele.id === temp0)
-
-    if (temp.length === 0)
-    {
-        res.statusCode = 404;
-        res.end();
-        return
-    }
-    res.json(temp);
-    res.end();
-}
-
-const func4 = (req, res) =>
-{//deleting
-    //sting to number
-    const req_id_parsed = parseInt(req.params.id);
+    // const temp0 = parseInt(req.params.id);
     //filtering id
     // const temp = phonebook.filter((ele) => ele.id === temp0)
 
-    for (let i = 0; i < phonebook.length; i++)
-    {
-        if (phonebook[i].id === req_id_parsed)
-        {
-            phonebook.splice(i, 1);
-            res.write("deleting");
-            res.end();
-            return;
-        }
-    }
+    const temp2 = await model_persons.findById(req.params.id)
+    console.log(temp2);
+    
+
+    res.json(temp2);
+    res.end();
+}
+
+const func4 = async (req, res) =>
+{
+    //deleting
+    //sting to number
+    // const req_id_parsed = parseInt(req.params.id);
+    //filtering id
+    // const temp = phonebook.filter((ele) => ele.id === temp0)
+
+    // for (let i = 0; i < phonebook.length; i++)
+    // {
+    //     if (phonebook[i].id === req_id_parsed)
+    //     {
+    //         phonebook.splice(i, 1);
+    //         res.write("deleting");
+    //         res.end();
+    //         return;
+    //     }
+    // }
+    const temp = await model_persons.remove({"_id": req.params.id})
+    console.log(temp)
+
+    res.write("deleting");
+    res.end();
 }
 
 const func5 = (req, res) =>
@@ -168,4 +175,4 @@ app.post("/api/persons", func5);
 
 
 //server listening
-app.listen(process.env.PORT, "127.0.0.1");
+app.listen(process.env.PORT || 80, "127.0.0.1");
