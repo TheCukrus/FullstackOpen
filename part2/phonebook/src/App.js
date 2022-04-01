@@ -52,6 +52,9 @@ const App = () =>
         handle_number_change={handle_number_change}
         setErrorMessage={setErrorMessage}
         setNotification={setNotification}
+        newName={newNumber}
+        newNumber={newNumber}
+        fetch_server_data={fetch_server_data}
       />
 
       <h2>Numbers</h2>

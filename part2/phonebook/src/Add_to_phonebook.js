@@ -6,32 +6,32 @@ const Add_to_phonebook = (props) =>
 
     const handle_click = async (event) =>
     {
-        const person = props.server_data.find((ele) => ele.name === newName)
+        const person = props.server_data.find((ele) => ele.name === props.newName)
 
         if (person === undefined)
         {
             //creating new record
             const result0 = await services_persons.create({
-                name: newName,
-                number: newNumber
+                name: props.newName,
+                number: props.newNumber
             })
             if (result0.message !== undefined)
             {
-                setErrorMessage(result0.message)
+                props.setErrorMessage(result0.message)
             }
             else 
             {
-                setNotification(`added ${newName}`)
+                props.setNotification(`added ${props.newName}`)
             }
 
         }
         else
         {
             //updating record
-            if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) 
+            if (window.confirm(`${props.newName} is already added to phonebook, replace the old number with a new one?`)) 
             {
                 const temp = await services_persons.update(
-                    props.server_data[i].id,
+                    props.server_data[person].id,
                     {
                         number: props.newNumber
                     }
@@ -43,12 +43,12 @@ const Add_to_phonebook = (props) =>
                 }
                 else
                 {
-                    props.setNotification(`updated ${newName}`)
+                    props.setNotification(`updated ${props.newName}`)
                 }
 
             }
         }
-        fetch_server_data()
+        props.fetch_server_data()
     }
 
 
