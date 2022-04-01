@@ -154,6 +154,7 @@ morgan.token("body", function (req, res)
 //middlewares
 app.use(cors());
 app.use(express.json())
+app.use(express.static("./build"))
 app.use(morgan(":body :method :url :status :res[content-length] - :response-time ms"))
 
 
@@ -167,4 +168,4 @@ app.post("/api/persons", func5);
 
 
 //server listening
-app.listen(3001, "127.0.0.1");
+app.listen(process.env.PORT, "127.0.0.1");
