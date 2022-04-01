@@ -1,6 +1,9 @@
 import axios from "axios";
 const port = 80;
-const baseUrl = `http://localhost:${port}/api/persons`
+// const domain = "https://obscure-plateau-60901.herokuapp.com";
+const domain = ""
+const baseUrl = `${domain}/api/persons`
+
 
 
 
@@ -59,14 +62,14 @@ const update = async (id, new_client_obj) =>
 
 const remove = async (id) =>
 {
-  
-        const result1 = await axios({
-            method: 'delete',
-            url: `${baseUrl}/${id}`
-        })
-        return result1;
-    
-    
+
+    const result1 = await axios({
+        method: 'delete',
+        url: `${baseUrl}/${id}`
+    })
+    return result1;
+
+
 }
 
 export default { getAll, create, update, remove }
