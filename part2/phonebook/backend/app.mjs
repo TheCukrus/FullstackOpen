@@ -64,22 +64,7 @@ const func3 = async (req, res) =>
 
 const func4 = async (req, res) =>
 {
-    //deleting
-    //sting to number
-    // const req_id_parsed = parseInt(req.params.id);
-    //filtering id
-    // const temp = phonebook.filter((ele) => ele.id === temp0)
 
-    // for (let i = 0; i < phonebook.length; i++)
-    // {
-    //     if (phonebook[i].id === req_id_parsed)
-    //     {
-    //         phonebook.splice(i, 1);
-    //         res.write("deleting");
-    //         res.end();
-    //         return;
-    //     }
-    // }
     const temp = await model_persons.remove({"_id": req.params.id})
     console.log(temp)
 

@@ -6,6 +6,7 @@ const Add_to_phonebook = (props) =>
 
     const handle_click = async (event) =>
     {
+        event.preventDefault()
         const person = props.server_data.find((ele) => ele.name === props.newName)
 
         if (person === undefined)
@@ -31,7 +32,7 @@ const Add_to_phonebook = (props) =>
             if (window.confirm(`${props.newName} is already added to phonebook, replace the old number with a new one?`)) 
             {
                 const temp = await services_persons.update(
-                    props.server_data[person].id,
+                    person.id,
                     {
                         number: props.newNumber
                     }
@@ -54,7 +55,7 @@ const Add_to_phonebook = (props) =>
 
     return (
         <div>
-            <form onSubmit={handle_click} >
+            <form onClick={handle_click} >
                 <div>name: <input onChange={props.handle_name_change} /></div>
                 <div>number: <input onChange={props.handle_number_change} /></div>
                 <div><button type="submit" >add</button></div>
