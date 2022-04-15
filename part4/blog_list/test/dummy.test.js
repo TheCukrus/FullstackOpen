@@ -1,5 +1,5 @@
 import list_helper from "../utils/list_helper.js"
-
+import app_listen from "../app.js"
 test('dummy returns one', () =>
 {
     const blogs = []
@@ -8,8 +8,14 @@ test('dummy returns one', () =>
     expect(result).toBe(1)
 })
 
-test("blog has some blogs, equals all blogs likes sum", () =>
+test("blog has some blogs, equals all blogs likes sum", async () =>
 {
-    const result1 = list_helper.totalLikes()
+    const result1 = await list_helper.totalLikes()
     expect(result1).toBe(3100);
+})
+
+
+test("paskutinis testas", () =>
+{
+    app_listen.close()
 })

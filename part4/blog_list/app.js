@@ -23,7 +23,9 @@ app.post('/api/blogs', notes.create)
 
 
 const PORT = 3003
-app.listen(PORT, () =>
+const app_listen = app.listen(PORT, () =>
 {
     console.log(`Server running on port ${PORT}`)
 })
+
+export default app_listen;
