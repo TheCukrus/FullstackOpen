@@ -1,24 +1,22 @@
-import http from "http";
 import express from "express";
 import cors from "cors";
-import mongoose from "mongoose";
-import Blog from "./models/note.js";
 import notes from "./controllers/notes.js"
+import list_helper from "./utils/list_helper.js";
 
 const app = express()
 
 
-//db
-const mongoUrl = 'mongodb+srv://cluster0.f2drs.mongodb.net/db3'
-mongoose.connect(mongoUrl ,{ user: "Zenia", pass: "Zenia", authSource: "admin" } )
+list_helper.totalLikes()
+
+
 
 app.use(cors())
 app.use(express.json())
 
 
 //endpoints
-app.get('/api/blogs', notes.create)
-app.post('/api/blogs', notes.post)
+app.get('/api/blogs', notes.read)
+app.post('/api/blogs', notes.create)
 
 
 

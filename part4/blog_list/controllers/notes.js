@@ -1,6 +1,6 @@
 import Blog from "../models/note.js";
 
-const create = (request, response) =>
+const read = (request, response) =>
 {
     Blog
         .find({})
@@ -11,7 +11,7 @@ const create = (request, response) =>
 }
 
 
-const post = (request, response) =>
+const create = (request, response) =>
 {
     const blog = new Blog(request.body)
 
@@ -24,4 +24,4 @@ const post = (request, response) =>
 }
 
 
-export default { create, post };
+export default { create, read };
