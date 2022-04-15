@@ -9,8 +9,8 @@ const app = express()
 
 
 //db
-const mongoUrl = 'mongodb://localhost/bloglist'
-mongoose.connect(mongoUrl)
+const mongoUrl = 'mongodb+srv://cluster0.f2drs.mongodb.net/db3'
+mongoose.connect(mongoUrl ,{ user: "Zenia", pass: "Zenia", authSource: "admin" } )
 
 app.use(cors())
 app.use(express.json())
