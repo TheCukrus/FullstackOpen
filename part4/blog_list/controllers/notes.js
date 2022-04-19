@@ -2,7 +2,7 @@ import Blog from "../models/note.js";
 
 const read = (request, response) =>
 {
-    Blog
+    Blog.Blog
         .find({})
         .then(blogs =>
         {
@@ -13,7 +13,7 @@ const read = (request, response) =>
 
 const create = (request, response) =>
 {
-    const blog = new Blog(request.body)
+    const blog = new Blog.Blog(request.body)
 
     blog
         .save()

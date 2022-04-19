@@ -1,12 +1,13 @@
-//GET http://localhost:3003/api/blogs HTTP/1.1
+GET http://localhost:3003/api/blogs HTTP/1.1
 
 
-POST http://localhost:3003/api/blogs HTTP/1.1
-content-type: application/json
+# POST http://localhost:3003/api/blogs HTTP/1.1
+# content-type: application/json
 
-{
-    "title": "temp",
-    "author": "asf",
-    "url": "temp_url",
-    "likes": 100
-}
+# {
+#     "title": "temp",
+#     "author": "asf",
+#     "url": "temp_url",
+#     "likes": 100
+# }
+

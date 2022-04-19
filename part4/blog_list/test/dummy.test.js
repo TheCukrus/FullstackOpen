@@ -1,21 +1,48 @@
+import note from "../models/note.js";
+import db1 from "../dbs/db1.js";
 import list_helper from "../utils/list_helper.js";
-import app from "../app.js";
-import mongoose from "mongoose";
 import supertest from "supertest";
+import app from "../app.js";
+
+//supertest1 => 
+const supertest1 = supertest(app.app)
 
 
-test('dummy returns one', () =>
+test("drop database", async () =>
 {
-    const blogs = []
+    await db1.drop_db();
 
-    const result = list_helper.dummy(blogs)
-    expect(result).toBe(1)
+    await note.Blog.create({
+        "title": "temp",
+        "author": "as",
+        "url": "/api/blogs",
+        "likes": 50
+    });
+
+    await note.Blog.create({
+        "title": "temp2",
+        "author": "as",
+        "url": "/api/blogs",
+        "likes": 501
+    });
+
+    await note.Blog.create({
+        "title": "temp3",
+        "author": "asf",
+        "url": "/api/blogs",
+        "likes": 60
+    })
+
+    const result1 = await note.Blog.find();
+    console.log(result1);
+
 })
+
 
 test("blog has some blogs, equals all blogs likes sum", async () =>
 {
     const result1 = await list_helper.totalLikes();
-    expect(result1).toBe(3400);
+    expect(result1).toBe(611);
 })
 
 
@@ -23,9 +50,9 @@ describe("favoriteBlog", () =>
 {
 
     const a = {
-        "title": "vienas",
+        "title": "temp2",
         "author": "as",
-        "likes": 1000
+        "likes": 501
     }
 
 
@@ -41,7 +68,7 @@ describe("mostblogs", () =>
 
     const a = {
         "author": "as",
-        "blogs": 6
+        "blogs": 2
     }
     test("mostblogs searches author who made most blogs and number of blogs", async () =>
     {
@@ -62,8 +89,19 @@ describe("supertest", () =>
     })
 })
 
+describe("does __v or _id is in the db", () =>
+{
+
+    test("deleting __v and _id", async () =>
+    {
+        const result1 = await supertest1.get("/api/blogs")
+        //   expect(result1[0]["body"]).toEqual(undefined)
+        console.log(result1.body[0])
+    })
+})
+
 test("paskutinis testas", async () =>
 {
-    await mongoose.disconnect();
+    await db1.disconnect();
     app.app_listen.close();
 })

@@ -1,16 +1,11 @@
-import Blog from "../models/note.js";
-
-const dummy = (blogs) =>
-{
-    return 1;
-}
+import note from "../models/note.js";
 
 
 const totalLikes = async (blogs) =>
 {
     try
     {
-        const result1 = await Blog.find()
+        const result1 = await note.Blog.find()
         const result2 = JSON.stringify(result1)
         let sum = 0;
         console.log(result2);
@@ -29,12 +24,11 @@ const totalLikes = async (blogs) =>
 
 }
 
-
 const favoriteBlog = async (blogs) => 
 {
     try
     {
-        const result1 = await Blog.find();
+        const result1 = await note.Blog.find();
         console.log(result1);
         let favoriteb = 0;
         let temp;
@@ -64,7 +58,7 @@ const mostBlogs = async (blogs) =>
 {
     try
     {
-        const result1 = await Blog.find();
+        const result1 = await note.Blog.find();
         let temp = 0;
         let temp2;
 
@@ -103,7 +97,7 @@ const mostLikes = async (blogs) =>
 {
     try
     {
-        const result1 = await Blog.find();
+        const result1 = await note.Blog.find();
         let temp = 0;
         let temp2;
 
@@ -137,4 +131,4 @@ const mostLikes = async (blogs) =>
     }
 }
 
-export default { dummy, totalLikes, favoriteBlog, mostBlogs, mostLikes };
+export default { totalLikes, favoriteBlog, mostBlogs, mostLikes };

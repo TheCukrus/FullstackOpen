@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import db1 from "../dbs/db1.js"
 
 const blogSchema = new mongoose.Schema({
   title: String,
@@ -7,11 +8,17 @@ const blogSchema = new mongoose.Schema({
   likes: Number
 })
 
-const Blog = mongoose.model('Blog', blogSchema);
+blogSchema.set('toJSON', {
+  transform: (document, returnedObject) =>
+  {
+    returnedObject.id = returnedObject._id.toString()
+    delete returnedObject._id
+    delete returnedObject.__v
+  }
+})
+
+const Blog = db1.connection.model('Blog', blogSchema);
 
 
-const mongoUrl = 'mongodb+srv://cluster0.f2drs.mongodb.net/db3'
-mongoose.connect(mongoUrl, { user: "Zenia", pass: "Zenia", authSource: "admin" })
 
-
-export default Blog;
+export default { Blog };
