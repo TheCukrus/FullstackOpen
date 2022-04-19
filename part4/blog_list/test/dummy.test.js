@@ -12,7 +12,7 @@ test('dummy returns one', () =>
 test("blog has some blogs, equals all blogs likes sum", async () =>
 {
     const result1 = await list_helper.totalLikes();
-    expect(result1).toBe(3100);
+    expect(result1).toBe(3300);
 })
 
 
@@ -33,6 +33,19 @@ describe("favoriteBlog", () =>
     })
 })
 
+describe("mostblogs", () =>
+{
+
+    const a = {
+        "author": "as",
+        "blogs": 6
+    }
+    test("mostblogs searches author who made most blogs and number of blogs", async () =>
+    {
+        const result1 = await list_helper.mostBlogs();
+        expect(result1).toEqual(a);
+    })
+})
 
 test("paskutinis testas", async () =>
 {

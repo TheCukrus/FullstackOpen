@@ -6,8 +6,9 @@ import list_helper from "./utils/list_helper.js";
 const app = express()
 
 
-list_helper.totalLikes()
-list_helper.favoriteBlog()
+// list_helper.totalLikes()
+// list_helper.favoriteBlog()
+list_helper.mostBlogs()
 
 
 app.use(cors())

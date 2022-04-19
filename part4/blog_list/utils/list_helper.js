@@ -13,7 +13,7 @@ const totalLikes = async (blogs) =>
         const result1 = await Blog.find()
         const result2 = JSON.stringify(result1)
         let sum = 0;
-        // console.log(result2);
+        console.log(result2);
         for (let i = 0; i < result1.length; i++)
         {
             sum += result1[i].likes;
@@ -60,5 +60,42 @@ const favoriteBlog = async (blogs) =>
     }
 }
 
+const mostBlogs = async (blogs) =>
+{
+    try
+    {
+        const result1 = await Blog.find();
+        let temp = 0;
+        let temp2;
 
-export default { dummy, totalLikes, favoriteBlog };
+        for (let i = 0; i < result1.length; i++)
+        {
+            var author = result1[i].author;
+            var counter = 0;
+
+            for (let j = 0; j < result1.length; j++)
+            {
+                if (author === result1[j].author)
+                {
+                    counter++;
+                }
+            }
+            if (counter > temp)
+            {
+                temp = counter;
+                temp2 = {
+                    "author": author,
+                    "blogs": temp
+                }
+            }
+        }
+        console.log(temp2);
+        return temp2;
+    }
+    catch (err)
+    {
+        console.log(`klaida mostBlogs: ${err}`)
+    }
+}
+
+export default { dummy, totalLikes, favoriteBlog, mostBlogs };
