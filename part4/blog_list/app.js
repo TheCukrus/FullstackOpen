@@ -30,4 +30,4 @@ const app_listen = app.listen(PORT, () =>
     console.log(`Server running on port ${PORT}`)
 })
 
-export default app_listen;
+export default { app_listen, app };

@@ -1,6 +1,9 @@
-import list_helper from "../utils/list_helper.js"
-import app_listen from "../app.js"
-import mongoose from "mongoose"
+import list_helper from "../utils/list_helper.js";
+import app from "../app.js";
+import mongoose from "mongoose";
+import supertest from "supertest";
+
+
 test('dummy returns one', () =>
 {
     const blogs = []
@@ -47,8 +50,20 @@ describe("mostblogs", () =>
     })
 })
 
+describe("supertest", () =>
+{
+
+    const supertest1 = supertest(app.app)
+
+    test("supertest", async () =>
+    {
+        const result1 = await supertest1.get("/api/blogs")
+        expect(result1.status).toEqual(200)
+    })
+})
+
 test("paskutinis testas", async () =>
 {
     await mongoose.disconnect();
-    app_listen.close();
+    app.app_listen.close();
 })
