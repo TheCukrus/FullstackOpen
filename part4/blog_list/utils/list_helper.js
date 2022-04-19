@@ -30,4 +30,18 @@ const totalLikes = async (blogs) =>
 }
 
 
-export default { dummy, totalLikes };
+const favoriteBlog = async (blogs) => 
+{
+    try
+    {
+        const result1 = await Blog.find()
+        console.log(result1)
+    }
+    catch (err)
+    {
+        console.log(`klaida list helper: ${err}`)
+    }
+}
+
+
+export default { dummy, totalLikes, favoriteBlog };
