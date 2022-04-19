@@ -12,7 +12,7 @@ test('dummy returns one', () =>
 test("blog has some blogs, equals all blogs likes sum", async () =>
 {
     const result1 = await list_helper.totalLikes();
-    expect(result1).toBe(3300);
+    expect(result1).toBe(3400);
 })
 
 

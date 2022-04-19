@@ -8,7 +8,8 @@ const app = express()
 
 // list_helper.totalLikes()
 // list_helper.favoriteBlog()
-list_helper.mostBlogs()
+// list_helper.mostBlogs()
+list_helper.mostLikes()
 
 
 app.use(cors())

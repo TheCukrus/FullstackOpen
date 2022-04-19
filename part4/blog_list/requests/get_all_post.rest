@@ -6,7 +6,7 @@ content-type: application/json
 
 {
     "title": "temp",
-    "author": "as",
+    "author": "asf",
     "url": "temp_url",
     "likes": 100
 }

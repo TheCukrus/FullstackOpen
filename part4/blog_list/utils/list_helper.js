@@ -98,4 +98,43 @@ const mostBlogs = async (blogs) =>
     }
 }
 
-export default { dummy, totalLikes, favoriteBlog, mostBlogs };
+
+const mostLikes = async (blogs) =>
+{
+    try
+    {
+        const result1 = await Blog.find();
+        let temp = 0;
+        let temp2;
+
+        for (let i = 0; i < result1.length; i++)
+        {
+            var author = result1[i].author;
+            var counter = 0;
+
+            for (let j = 0; j < result1.length; j++)
+            {
+                if (author === result1[j].author)
+                {
+                    counter += result1[j].likes;
+                }
+            }
+            if (counter > temp)
+            {
+                temp = counter;
+                temp2 = {
+                    "author": author,
+                    "blogs": temp
+                }
+            }
+        }
+        console.log(temp2);
+        return temp2;
+    }
+    catch (err)
+    {
+        console.log(`klaida mostLikes: ${err}`)
+    }
+}
+
+export default { dummy, totalLikes, favoriteBlog, mostBlogs, mostLikes };
