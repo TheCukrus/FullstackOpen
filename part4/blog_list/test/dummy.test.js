@@ -1,5 +1,6 @@
 import list_helper from "../utils/list_helper.js"
 import app_listen from "../app.js"
+import mongoose from "mongoose"
 test('dummy returns one', () =>
 {
     const blogs = []
@@ -10,12 +11,31 @@ test('dummy returns one', () =>
 
 test("blog has some blogs, equals all blogs likes sum", async () =>
 {
-    const result1 = await list_helper.totalLikes()
+    const result1 = await list_helper.totalLikes();
     expect(result1).toBe(3100);
 })
 
 
-test("paskutinis testas", () =>
+describe("favoriteBlog", () =>
 {
-    app_listen.close()
+
+    const a = {
+        "title": "vienas",
+        "author": "as",
+        "likes": 1000
+    }
+
+
+    test("favoriteBlog to find out whitch post has most likes", async () =>
+    {
+        const result1 = await list_helper.favoriteBlog();
+        expect(result1).toEqual(a);
+    })
+})
+
+
+test("paskutinis testas", async () =>
+{
+    await mongoose.disconnect();
+    app_listen.close();
 })

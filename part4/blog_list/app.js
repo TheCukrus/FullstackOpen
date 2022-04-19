@@ -7,7 +7,7 @@ const app = express()
 
 
 list_helper.totalLikes()
-
+list_helper.favoriteBlog()
 
 
 app.use(cors())

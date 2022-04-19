@@ -12,8 +12,8 @@ const totalLikes = async (blogs) =>
     {
         const result1 = await Blog.find()
         const result2 = JSON.stringify(result1)
-        console.log(result2)
         let sum = 0;
+        // console.log(result2);
         for (let i = 0; i < result1.length; i++)
         {
             sum += result1[i].likes;
@@ -34,12 +34,29 @@ const favoriteBlog = async (blogs) =>
 {
     try
     {
-        const result1 = await Blog.find()
-        console.log(result1)
+        const result1 = await Blog.find();
+        console.log(result1);
+        let favoriteb = 0;
+        let temp;
+        for (let i = 0; i < result1.length; i++)
+        {
+            if (favoriteb < result1[i].likes)
+            {
+                favoriteb = result1[i].likes;
+                temp =
+                {
+                    "title": result1[i].title,
+                    "author": result1[i].author,
+                    "likes": result1[i].likes
+                }
+            }
+        }
+        console.log(temp);
+        return temp;
     }
     catch (err)
     {
-        console.log(`klaida list helper: ${err}`)
+        console.log(`klaida list helper: ${err}`);
     }
 }
 
