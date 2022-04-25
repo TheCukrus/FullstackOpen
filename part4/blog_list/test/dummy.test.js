@@ -189,6 +189,43 @@ describe("4.12*: Blog list tests, step5", () =>
     })
 })
 
+describe("4.13 Blog list expansions, step1", () =>
+{
+
+    test("creating new post", async () =>
+    {
+        const result1 = await supertest1.post("/api/blogs")
+            .send(
+                {
+                    "title": "betka1s",
+                    "author": "a1",
+                    "url": "api/blogs",
+                    "likes": 10,
+                    "id": "123"
+                }
+            )
+        expect(result1.statusCode).toEqual(201);
+    })
+
+    test("testing how many blogs are", async () =>
+    {
+        const result1 = await supertest1.get("/api/blogs")
+        expect(result1.body.length).toEqual(8);
+    })
+
+    test("deleting new post", async () =>
+    {
+        const result1 = await supertest1.delete("/api/blogs:123")
+        expect(result1.statusCode).toEqual(201);
+    })
+
+    test("testing how many blogs are after one we deleted", async () =>
+    {
+        const result1 = await supertest1.get("/api/blogs")
+        expect(result1.body.length).toEqual(7);
+    })
+})
+
 test("paskutinis testas", async () =>
 {
     await db1.disconnect();

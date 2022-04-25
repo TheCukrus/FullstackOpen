@@ -1,14 +1,22 @@
 import Blog from "../models/note.js";
 
-const read = (request, response) =>
+const read = async (request, response) =>
 {
 
-    Blog.Blog
-        .find({})
-        .then(blogs =>
-        {
-            response.json(blogs)
-        })
+    try
+    {
+        const result1 = await Blog.Blog.find({})
+
+        response.statusCode = 200;
+        response.json(result1);
+        response.end();
+    }
+    catch (err)
+    {
+        console.log("klaida read controller:", err);
+        response.statusCode = 418;
+        response.end();
+    }
 }
 
 
@@ -47,6 +55,25 @@ const create = async (request, response) =>
     }
 }
 
+const remove = async (request, response) =>
+{
+    try
+    {
+        const result1 = await Blog.Blog.deleteOne({ "id": request.params.id });
+
+        response.statusCode = 201
+        response.json(result1);
+    }
+    catch (err)
+    {
+        console.log("klaida remove controller", err);
+
+        response.statusCode = 418;
+        response.end();
+    }
+
+}
 
 
-export default { create, read };
+
+export default { create, read, remove };

@@ -19,6 +19,7 @@ app.use(express.json())
 //endpoints
 app.get('/api/blogs', notes.read);
 app.post('/api/blogs', notes.create);
+app.delete('/api/blogs:id', notes.remove);
 
 
 
