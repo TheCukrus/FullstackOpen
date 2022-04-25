@@ -11,17 +11,36 @@ const read = (request, response) =>
 }
 
 
-const create = (request, response) =>
+const create = async (request, response) =>
 {
-    const blog = new Blog.Blog(request.body)
 
-    blog
-        .save()
-        .then(result =>
+    try
+    {
+
+        if (request.body.likes === undefined)
         {
-            response.status(201).json(result)
+            request.body.likes = 0;
+        }
+
+        const result1 = await Blog.Blog.create({
+            "title": request.body.title,
+            "author": request.body.author,
+            "url": request.body.url,
+            "likes": request.body.likes
         })
+
+        response.statusCode = 201;
+        response.end();
+
+    }
+    catch (err)
+    {
+        console.log("klaida create controller", err);
+        response.statusCode = 418;
+        response.end();
+    }
 }
+
 
 
 export default { create, read };

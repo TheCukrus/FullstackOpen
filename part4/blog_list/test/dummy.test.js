@@ -138,7 +138,26 @@ describe("4.10: blog list tests, step3", () =>
 
 })
 
+describe("4.11*: Blog list tests, step4", () =>
+{
+    test("creating test without likes property", async () =>
+    {
+        await supertest1.post("/api/blogs")
+            .send(
+                {
+                    "title": "temp11",
+                    "author": "assas",
+                    "url": "/api/blogs"
+                })
+    })
 
+    test("wathching blogs", async () =>
+    {
+        const result1 = await supertest1.get("/api/blogs")
+        expect(result1.body[4].likes).toEqual(0);
+    })
+
+})
 
 test("paskutinis testas", async () =>
 {
