@@ -111,6 +111,35 @@ describe("4.9*", () =>
     })
 })
 
+describe("4.10: blog list tests, step3", () =>
+{
+    test("checking how many post is in db", async () =>
+    {
+        const result0 = await supertest1.get("/api/blogs");
+        expect(result0.body.length).toEqual(3);
+    })
+
+    test("making new post", async () =>
+    {
+        await supertest1.post("/api/blogs")
+            .send({
+                "title": "laikinasis",
+                "author": "neas",
+                "url": "/api/blogs",
+                "likes": 49
+            })
+    })
+
+    test("checking if new post added to the db", async () =>
+    {
+        const result1 = await supertest1.get("/api/blogs");
+        expect(result1.body.length).toEqual(4);
+    })
+
+})
+
+
+
 test("paskutinis testas", async () =>
 {
     await db1.disconnect();
