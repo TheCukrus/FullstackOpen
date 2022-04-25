@@ -2,6 +2,7 @@ import Blog from "../models/note.js";
 
 const read = (request, response) =>
 {
+
     Blog.Blog
         .find({})
         .then(blogs =>
@@ -20,6 +21,11 @@ const create = async (request, response) =>
         if (request.body.likes === undefined)
         {
             request.body.likes = 0;
+        }
+        if ((request.body.title === undefined) || (request.body.url === undefined))
+        {
+            response.statusCode = 400;
+            response.end();
         }
 
         const result1 = await Blog.Blog.create({

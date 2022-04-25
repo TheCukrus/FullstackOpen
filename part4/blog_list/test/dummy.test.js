@@ -159,6 +159,36 @@ describe("4.11*: Blog list tests, step4", () =>
 
 })
 
+
+describe("4.12*: Blog list tests, step5", () =>
+{
+    test("testing post request without title", async () =>
+    {
+        const temp1 = await supertest1.post("/api/blogs")
+            .send(
+                {
+                    "author": "a",
+                    "url": "api/blogs",
+                    "likes": 10
+                }
+            )
+        expect(temp1.statusCode).toEqual(400);
+    })
+
+    test("testing post request without url", async () =>
+    {
+        const temp1 = await supertest1.post("/api/blogs")
+            .send(
+                {
+                    "title": "betkas",
+                    "author": "a",
+                    "likes": 10
+                }
+            )
+        expect(temp1.statusCode).toEqual(400);
+    })
+})
+
 test("paskutinis testas", async () =>
 {
     await db1.disconnect();
