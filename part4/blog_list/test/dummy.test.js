@@ -100,6 +100,16 @@ describe("does __v or _id is in the db", () =>
     })
 })
 
+describe("test for defining an id", () =>
+{
+    test("check if id is defined", async () =>
+    {
+        const result1 = await supertest.get("api/blogs:id");
+        expect(result1).toBeDefined();
+        console.log(result1);
+    })
+})
+
 test("paskutinis testas", async () =>
 {
     await db1.disconnect();
