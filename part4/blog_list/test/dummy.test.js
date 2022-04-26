@@ -7,227 +7,287 @@ import app from "../app.js";
 //supertest1 => 
 const supertest1 = supertest(app.app)
 
-
-test("drop database", async () =>
-{
-    await db1.drop_db();
-
-    await note.Blog.create({
-        "title": "temp",
-        "author": "as",
-        "url": "/api/blogs",
-        "likes": 50
-    });
-
-    await note.Blog.create({
-        "title": "temp2",
-        "author": "as",
-        "url": "/api/blogs",
-        "likes": 501
-    });
-
-    await note.Blog.create({
-        "title": "temp3",
-        "author": "asf",
-        "url": "/api/blogs",
-        "likes": 60
-    })
-
-    const result1 = await note.Blog.find();
-    console.log(result1);
-
-})
-
-
-test("blog has some blogs, equals all blogs likes sum", async () =>
-{
-    const result1 = await list_helper.totalLikes();
-    expect(result1).toBe(611);
-})
-
-
-describe("favoriteBlog", () =>
+describe("all tests", () =>
 {
 
-    const a = {
-        "title": "temp2",
-        "author": "as",
-        "likes": 501
-    }
 
 
-    test("favoriteBlog to find out whitch post has most likes", async () =>
+    beforeAll(async () =>
     {
-        const result1 = await list_helper.favoriteBlog();
-        expect(result1).toEqual(a);
-    })
-})
+        await db1.drop_db();
 
-describe("mostblogs", () =>
-{
+        await note.Blog.create({
+            "title": "temp",
+            "author": "as",
+            "url": "/api/blogs",
+            "likes": 50
+        });
 
-    const a = {
-        "author": "as",
-        "blogs": 2
-    }
-    test("mostblogs searches author who made most blogs and number of blogs", async () =>
-    {
-        const result1 = await list_helper.mostBlogs();
-        expect(result1).toEqual(a);
-    })
-})
+        await note.Blog.create({
+            "title": "temp2",
+            "author": "as",
+            "url": "/api/blogs",
+            "likes": 501
+        });
 
-describe("supertest", () =>
-{
+        await note.Blog.create({
+            "title": "temp3",
+            "author": "asf",
+            "url": "/api/blogs",
+            "likes": 60
+        })
 
-    const supertest1 = supertest(app.app)
-
-    test("supertest", async () =>
-    {
-        const result1 = await supertest1.get("/api/blogs")
-        expect(result1.status).toEqual(200)
-    })
-})
-
-describe("does __v or _id is in the db", () =>
-{
-
-    test("deleting __v and _id", async () =>
-    {
-        const result1 = await supertest1.get("/api/blogs")
-        //   expect(result1[0]["body"]).toEqual(undefined)
-        console.log(result1.body[0])
-    })
-})
-
-describe("4.9*", () =>
-{
-    test("check if id is defined", async () =>
-    {
-        const result1 = await supertest1.get("/api/blogs");
-
-        expect(result1.body[0].id).toBeDefined();
+        const result1 = await note.Blog.find();
         console.log(result1);
-    })
-})
 
-describe("4.10: blog list tests, step3", () =>
-{
-    test("checking how many post is in db", async () =>
-    {
-        const result0 = await supertest1.get("/api/blogs");
-        expect(result0.body.length).toEqual(3);
     })
 
-    test("making new post", async () =>
+
+    test("blog has some blogs, equals all blogs likes sum", async () =>
     {
-        await supertest1.post("/api/blogs")
-            .send({
-                "title": "laikinasis",
-                "author": "neas",
-                "url": "/api/blogs",
-                "likes": 49
-            })
+        const result1 = await list_helper.totalLikes();
+        expect(result1).toBe(611);
     })
 
-    test("checking if new post added to the db", async () =>
+
+    describe("favoriteBlog", () =>
     {
-        const result1 = await supertest1.get("/api/blogs");
-        expect(result1.body.length).toEqual(4);
+
+        const a = {
+            "title": "temp2",
+            "author": "as",
+            "likes": 501
+        }
+
+
+        test("favoriteBlog to find out whitch post has most likes", async () =>
+        {
+            const result1 = await list_helper.favoriteBlog();
+            expect(result1).toEqual(a);
+        })
     })
 
-})
-
-describe("4.11*: Blog list tests, step4", () =>
-{
-    test("creating test without likes property", async () =>
+    describe("mostblogs", () =>
     {
-        await supertest1.post("/api/blogs")
-            .send(
-                {
-                    "title": "temp11",
-                    "author": "assas",
-                    "url": "/api/blogs"
+
+        const a = {
+            "author": "as",
+            "blogs": 2
+        }
+        test("mostblogs searches author who made most blogs and number of blogs", async () =>
+        {
+            const result1 = await list_helper.mostBlogs();
+            expect(result1).toEqual(a);
+        })
+    })
+
+    describe("supertest", () =>
+    {
+
+        const supertest1 = supertest(app.app)
+
+        test("supertest", async () =>
+        {
+            const result1 = await supertest1.get("/api/blogs")
+            expect(result1.status).toEqual(200)
+        })
+    })
+
+    describe("does __v or _id is in the db", () =>
+    {
+
+        test("deleting __v and _id", async () =>
+        {
+            const result1 = await supertest1.get("/api/blogs")
+            //   expect(result1[0]["body"]).toEqual(undefined)
+            console.log(result1.body[0])
+        })
+    })
+
+    describe("4.9*", () =>
+    {
+        test("check if id is defined", async () =>
+        {
+            const result1 = await supertest1.get("/api/blogs");
+
+            expect(result1.body[0].id).toBeDefined();
+            console.log(result1);
+        })
+    })
+
+    describe("4.10: blog list tests, step3", () =>
+    {
+        test("checking how many post is in db", async () =>
+        {
+            const result0 = await supertest1.get("/api/blogs");
+            expect(result0.body.length).toEqual(3);
+        })
+
+        test("making new post", async () =>
+        {
+            await supertest1.post("/api/blogs")
+                .send({
+                    "title": "laikinasis",
+                    "author": "neas",
+                    "url": "/api/blogs",
+                    "likes": 49
                 })
+        })
+
+        test("checking if new post added to the db", async () =>
+        {
+            const result1 = await supertest1.get("/api/blogs");
+            expect(result1.body.length).toEqual(4);
+        })
+
     })
 
-    test("wathching blogs", async () =>
+    describe("4.11*: Blog list tests, step4", () =>
     {
-        const result1 = await supertest1.get("/api/blogs")
-        expect(result1.body[4].likes).toEqual(0);
+        test("creating test without likes property", async () =>
+        {
+            await supertest1.post("/api/blogs")
+                .send(
+                    {
+                        "title": "temp11",
+                        "author": "assas",
+                        "url": "/api/blogs"
+                    })
+        })
+
+        test("wathching blogs", async () =>
+        {
+            const result1 = await supertest1.get("/api/blogs")
+            expect(result1.body[4].likes).toEqual(0);
+        })
+
     })
 
-})
 
-
-describe("4.12*: Blog list tests, step5", () =>
-{
-    test("testing post request without title", async () =>
+    describe("4.12*: Blog list tests, step5", () =>
     {
-        const temp1 = await supertest1.post("/api/blogs")
-            .send(
-                {
-                    "author": "a",
-                    "url": "api/blogs",
-                    "likes": 10
-                }
-            )
-        expect(temp1.statusCode).toEqual(400);
+        test("testing post request without title", async () =>
+        {
+            const temp1 = await supertest1.post("/api/blogs")
+                .send(
+                    {
+                        "author": "a",
+                        "url": "api/blogs",
+                        "likes": 10
+                    }
+                )
+            expect(temp1.statusCode).toEqual(400);
+        })
+
+        test("testing post request without url", async () =>
+        {
+            const temp1 = await supertest1.post("/api/blogs")
+                .send(
+                    {
+                        "title": "betkas",
+                        "author": "a",
+                        "likes": 10
+                    }
+                )
+            expect(temp1.statusCode).toEqual(400);
+        })
     })
 
-    test("testing post request without url", async () =>
+    describe("4.13 Blog list expansions, step1", () =>
     {
-        const temp1 = await supertest1.post("/api/blogs")
-            .send(
-                {
-                    "title": "betkas",
-                    "author": "a",
-                    "likes": 10
-                }
-            )
-        expect(temp1.statusCode).toEqual(400);
+
+        test("creating new post", async () =>
+        {
+            const result1 = await supertest1.post("/api/blogs")
+                .send(
+                    {
+                        "title": "betka1s",
+                        "author": "a1",
+                        "url": "api/blogs",
+                        "likes": 10,
+                        "id": "123"
+                    }
+                )
+            expect(result1.statusCode).toEqual(201);
+        })
+
+        test("testing how many blogs are", async () =>
+        {
+            const result1 = await supertest1.get("/api/blogs")
+            expect(result1.body.length).toEqual(8);
+        })
+
+        test("deleting new post", async () =>
+        {
+            const result1 = await supertest1.delete("/api/blogs/123")
+            expect(result1.statusCode).toEqual(201);
+        })
+
+        test("testing how many blogs are after one we deleted", async () =>
+        {
+            const result1 = await supertest1.get("/api/blogs")
+            expect(result1.body.length).toEqual(7);
+        })
     })
-})
 
-describe("4.13 Blog list expansions, step1", () =>
-{
+    // describe("4.14 Blog list expansions, step2", () =>
+    // {
+    //     test("making new post for testing update controller", async () =>
+    //     {
+    //         const result1 = await supertest1.post("/api/blogs")
+    //             .send(
+    //                 {
+    //                     "title": "betka1s",
+    //                     "author": "a1",
+    //                     "url": "api/blogs",
+    //                     "likes": 10,
+    //                 })
+    //         expect(result1.statusCode).toEqual(201);
+    //     })
 
-    test("creating new post", async () =>
+    //     test("geting id from last post we made && made update same post", async () =>
+    //     {
+    //         //get data from db
+    //         const result1 = await supertest1.get("/api/blogs")
+
+    //         const holy_id = result1.body[7].id;
+    //         //put data to existing post
+    //         const result2 = await supertest1.put(`/api/blogs/${holy_id}`)
+    //             .send({
+    //                 "title": "naujas1",
+    //                 "author": "b91",
+    //                 "url": "api/blogs",
+    //                 "likes": 17,
+    //             })
+    //         expect(result2.statusCode).toEqual(201);
+
+
+    //         const temp1 = await note.Blog.findOne({ "id": holy_id })
+    //         expect(temp1.id).toEqual(holy_id)
+    //         expect(temp1.title).toEqual("naujas1");
+
+    //         //get new data
+    //         const result3 = await supertest1.get("/api/blogs")
+    //         expect(holy_id.toBe(temp1.id))
+    //         expect(holy_id).toBe(result3.body[7].id)
+
+    //         expect(result3.body[7]).toEqual({
+    //             "title": "naujas1",
+    //             "author": "b91",
+    //             "url": "api/blogs",
+    //             "likes": 17,
+    //             "id": holy_id
+    //         })
+
+
+    //     })
+    // })
+
+
+    afterAll(async () =>
     {
-        const result1 = await supertest1.post("/api/blogs")
-            .send(
-                {
-                    "title": "betka1s",
-                    "author": "a1",
-                    "url": "api/blogs",
-                    "likes": 10,
-                    "id": "123"
-                }
-            )
-        expect(result1.statusCode).toEqual(201);
+        await db1.disconnect();
+        app.app_listen.close();
     })
 
-    test("testing how many blogs are", async () =>
-    {
-        const result1 = await supertest1.get("/api/blogs")
-        expect(result1.body.length).toEqual(8);
-    })
-
-    test("deleting new post", async () =>
-    {
-        const result1 = await supertest1.delete("/api/blogs:123")
-        expect(result1.statusCode).toEqual(201);
-    })
-
-    test("testing how many blogs are after one we deleted", async () =>
-    {
-        const result1 = await supertest1.get("/api/blogs")
-        expect(result1.body.length).toEqual(7);
-    })
-})
-
-test("paskutinis testas", async () =>
-{
-    await db1.disconnect();
-    app.app_listen.close();
 })

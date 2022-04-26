@@ -74,6 +74,30 @@ const remove = async (request, response) =>
 
 }
 
+const update = async (request, response) =>
+{
+    try
+    {
+        const result1 = await Blog.Blog.findOne({ "id": request.params.id });
+
+        result1.title = request.body.title;
+        result1.author = request.body.author; 
+        result1.url = request.body.url;
+        result1.likes = request.body.likes;
+
+        await result1.save();
+           
+        
+        response.statusCode = 201;
+        response.json(result1);
+    }
+    catch (err)
+    {
+        console.log(`klaida controller update: ${err}`);
+        response.statusCode = 418;
+        response.end();
+    }
+}
 
 
-export default { create, read, remove };
+export default { create, read, remove, update };
