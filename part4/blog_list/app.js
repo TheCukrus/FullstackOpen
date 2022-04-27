@@ -1,35 +1,24 @@
-import express from "express";
-import cors from "cors";
-import notes from "./controllers/notes.js"
-import list_helper from "./utils/list_helper.js";
+import express from "express"
+import cors from "cors"
+import controller_blog from "./controllers/controller_blog"
 
-const app = express()
+const express_1 = express()
 
-
-// list_helper.totalLikes()
-// list_helper.favoriteBlog()
-// list_helper.mostBlogs()
-// list_helper.mostLikes()
-
-
-app.use(cors())
-app.use(express.json())
+//midlewares
+express_1.use(cors())
+express_1.use(express.json())
 
 
 //endpoints
-app.get('/api/blogs', notes.read);
-app.post('/api/blogs', notes.create);
-app.delete('/api/blogs/:id', notes.remove);
-app.put('/api/blogs/:id', notes.update)
-
-
-
-
+express_1.post('/api/blogs', controller_blog.create);
+express_1.get('/api/blogs', controller_blog.read);
+express_1.put('/api/blogs/:id', controller_blog.update)
+express_1.delete('/api/blogs/:id', controller_blog.remove);
 
 const PORT = 3003
-const app_listen = app.listen(PORT, () =>
+const express_1_listener = express_1.listen(PORT, "127.0.0.1", () =>
 {
     console.log(`Server running on port ${PORT}`)
 })
 
-export default { app_listen, app };
+export default { express_1_listener, express_1 }

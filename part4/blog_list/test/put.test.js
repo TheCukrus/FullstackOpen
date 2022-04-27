@@ -1,86 +1,93 @@
-import note from "../models/note.js";
-import db1 from "../dbs/db1.js";
-import list_helper from "../utils/list_helper.js";
-import supertest from "supertest";
-import app from "../app.js";
+import supertest from "supertest"
 
-//supertest1 => 
-const supertest1 = supertest(app.app)
+import app from "../app.js"
+import database_1 from "../databases/database_1.js"
+import model_blog from "../models/model_blog.js"
 
-describe("all tests", () =>
+const initial_blogs = [
+    {
+        "title": "title_1",
+        "author": "author_1",
+        "url": "url_1",
+        "likes": 1
+    },
+    {
+        "title": "title_2",
+        "author": "author_2",
+        "url": "url_2",
+        "likes": 2
+    },
+    {
+        "title": "title_3",
+        "author": "author_3",
+        "url": "url_3",
+        "likes": 3
+    }
+]
+
+const supertest_1 = supertest(app.express_1)
+
+beforeAll(async () =>
 {
+    // await database_1.drop_db()//alternative 1 delete db
 
+    await model_blog.deleteMany()//alternative 2 delete all records in colection
 
+    await model_blog.create(initial_blogs[0])
+    await model_blog.create(initial_blogs[1])
+    await model_blog.create(initial_blogs[2])
+})
 
-    beforeAll(async () =>
+afterAll(async () =>
+{
+    await database_1.disconnect()
+    app.express_1_listener.close()
+})
+
+describe("update blog (by http reqest)", () =>
+{
+    let collection_dump_1
+    let http_response
+    let collection_dump_2
+
+    test("blogs are successfuly dumped from database to collection_dump_1", async () =>
     {
-        await db1.drop_db();
-
-        await note.Blog.create({
-            "title": "temp",
-            "author": "as",
-            "url": "/api/blogs",
-            "likes": 50
-        });
-
-        await note.Blog.create({
-            "title": "temp2",
-            "author": "as",
-            "url": "/api/blogs",
-            "likes": 501
-        });
-
-        await note.Blog.create({
-            "title": "temp3",
-            "author": "asf",
-            "url": "/api/blogs",
-            "likes": 60
-        })
-
+        collection_dump_1 = await model_blog.find()
+        collection_dump_1 = collection_dump_1.map(ele => ele.toJSON())//required to prevent buggy behaviour on automatic conversion
     })
 
-    afterAll(async () =>
+    test("HTTP reqest is successfuly send", async () =>
     {
-        await db1.disconnect();
-        app.app_listen.close();
+        http_response = await supertest_1
+            .put(`/api/blogs/${collection_dump_1[1].id}`)
+            .send({
+                "title": "title_4",
+                "author": "author_4",
+                "url": "url_4",
+                "likes": 4
+            })
     })
 
-    let id;
-    test("get id of post", async () =>
+    test("server respose status code is 200", async () =>
     {
-        const result1 = await note.Blog.find({})
-        expect(result1.length).toEqual(3);
-
-        id = result1[1].id;
+        expect(http_response.statusCode).toEqual(200)
     })
 
-    test("does return 201 statusCode", async () =>
+    test("blogs are successfuly dumped from database to collection_dump_2", async () =>
     {
-        const result1 = await supertest1.put(`/api/blogs/${id}`)
-            .send(
-                {
-                    "title": "temp20",
-                    "author": "asee",
-                    "url": "/api/blogs",
-                    "likes": 51
-                })
-        expect(result1.statusCode).toEqual(201);
-    });
-
-    test("does it change data", async () =>
-    {
-        let temp;
-        const result1 = await note.Blog.find({});
-        for (let i = 0; i < result1.length; i++)
-        {
-            if (result1[i].id === id)
-            {
-                temp = result1[i];
-            }
-        }
-        expect(temp !== undefined).toBe(true);
-        expect(temp.title).toEqual("temp20");
-        
+        collection_dump_2 = await model_blog.find()
+        collection_dump_2 = collection_dump_2.map(ele => ele.toJSON())//required to prevent buggy behaviour on automatic conversion
     })
 
+    test("modified_collection_dump_1 matches collection_dump_2", async () =>
+    {
+        const modified_collection_dump_1 = [...collection_dump_1]
+
+        modified_collection_dump_1[1].title = "title_4"
+        modified_collection_dump_1[1].author = "author_4"
+        modified_collection_dump_1[1].url = "url_4"
+        modified_collection_dump_1[1].likes = 4
+
+        expect(modified_collection_dump_1).toEqual(collection_dump_2)
+    })
 })
