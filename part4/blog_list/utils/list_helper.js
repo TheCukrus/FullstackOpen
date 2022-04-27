@@ -1,4 +1,4 @@
-import note from "../models/note.js";
+import note from "../models/model_blog.js";
 
 
 const totalLikes = async (blogs) =>
