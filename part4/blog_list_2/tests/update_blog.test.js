@@ -80,9 +80,9 @@ describe("update blog", () =>
         collection_dump1[2].author = "penktas";
         collection_dump1[2].likes = 5;
        
+
         expect(collection_dump1).toEqual(collection_dump2);
     })
 
 })
-
 
