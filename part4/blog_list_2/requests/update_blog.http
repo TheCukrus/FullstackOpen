@@ -1,0 +1,9 @@
+PUT http://127.0.0.1:3003/api/blogs/626b7f7c1b471295e0ecb16f
+Content-Type:application/json
+
+{
+     "title": "naujesnis",
+    "author": "naujas",
+    "url": "https://google.lt",
+    "likes": 234234
+}
