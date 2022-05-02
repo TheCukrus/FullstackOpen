@@ -2,6 +2,7 @@ const supertest = require("supertest");
 const express1 = require("../app.js");
 const modelBlog = require("../models/model_blog");
 const express1_listener = require("../index.js");
+const  modelUser = require("../models/model_user.js");
 
 const supertest1 = supertest(express1)
 
@@ -26,6 +27,7 @@ afterAll(() =>
 {
     express1_listener.close();
     modelBlog.mongoose_connection.close();
+    modelUser.mongoose_connection.close();
 })
 
 describe("update blog", () =>
@@ -74,14 +76,14 @@ describe("update blog", () =>
         expect(collection_dump2.length).toEqual(4)
     })
 
-    test("checking collection_dump1 and collection_dump2 updated", async () =>
+    test("checking collection_dump2 and collection_dump1 modified", async () =>
     {
         collection_dump1[2].title = "penki";
         collection_dump1[2].author = "penktas";
         collection_dump1[2].likes = 5;
-       
 
-        expect(collection_dump1).toEqual(collection_dump2);
+
+        expect(collection_dump2).toEqual(collection_dump1);
     })
 
 })
