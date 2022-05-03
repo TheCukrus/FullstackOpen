@@ -1,10 +1,10 @@
 const crypto = require("crypto");
 const config = require("./config");
 
-const generate_token = (user_name, user_password) =>
+const generate_token = () =>
 {
     let token = crypto.createHash("sha256")
-    token.update(user_name + user_password + config.SALT);
+    token.update(Date.now() + config.SALT);
 
     return token.digest("base64");
 }

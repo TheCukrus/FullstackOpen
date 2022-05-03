@@ -8,7 +8,7 @@ const blogSchema = new mongoose.Schema({
     author: { type: String, required: true },
     url: { type: String, required: true },
     likes: { type: Number, required: true },
-    owner: { type: String, required: true }
+    owner: { type: String, required: true, ref: "user" }
 })
 
 const modelBlog = mongoose_connection.model('Blog', blogSchema);

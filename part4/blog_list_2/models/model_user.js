@@ -8,7 +8,8 @@ const user_schema = new mongoose.Schema(
     {
         user_name: { type: String, required: true },
         password: { type: String, required: true, minlength: 8 },
-        token: { type: String, required: true }
+        token: { type: String, required: true },
+        blogs: [{ type: mongoose.Schema.Types.ObjectId, ref: "Blog" }]
     })
 
 

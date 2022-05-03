@@ -1,5 +1,5 @@
 const express = require("express");
-const modelBlog = require("../models/model_blog.js");
+const model_blog = require("../models/model_blog.js");
 const model_user = require("../models/model_user.js");
 
 const router_blogs = express.Router();
@@ -8,7 +8,36 @@ router_blogs.get('/', async (request, response) =>
 {
     try
     {
-        const result1 = await modelBlog.modelBlog.find({})
+        const result1 = await model_blog.modelBlog.find({})
+        // .populate({"path":"owner", "model": model_user.modelUser});
+
+        for (let i = 0; i < result1.length; i++)
+        {
+            result1[i]._doc.owner = await model_user.modelUser.findOne({ "user_name": result1[i]._doc.owner })
+            delete result1[i]._doc.owner._doc.password;
+            delete result1[i]._doc.__v;
+            delete result1[i]._doc.owner._doc.__v;
+            delete result1[i]._doc.owner._doc.token;
+        }
+
+        response.statusCode = 200;
+        response.json(result1);
+    }
+    catch (err)
+    {
+        response.statusCode = 404;
+        response.end();
+    }
+})
+
+router_blogs.get('/:id', async (request, response) =>
+{
+    try
+    {
+        const result1 = await model_blog.modelBlog.findOne({ "id": request.params.title }, { "_id": 0, "__v": 0 });
+
+        result1._doc.owner = await model_user.modelUser.findOne({ "title": result1._doc.owner }, { "password": 0, "token": 0, "_id": 0, "__v": 0 })
+
         response.statusCode = 200;
         response.json(result1);
     }
@@ -34,11 +63,11 @@ router_blogs.post('/', async (request, response) =>
     try
     {
         //check if user exist in db
-        let result0 = await model_user.modelUser.findOne({ "token": request.headers.auth_token });
+        let resolved_user = await model_user.modelUser.findOne({ "token": request.headers.auth_token });
 
-        result0 = result0.toJSON();
+        resolved_user = resolved_user.toJSON();
 
-        if (result0.token !== request.headers.auth_token)
+        if (resolved_user.token !== request.headers.auth_token)
         {
             response.statusCode = 401;
             response.end();
@@ -47,18 +76,21 @@ router_blogs.post('/', async (request, response) =>
 
 
         //creating new blog
-        const result1 = await modelBlog.modelBlog.create(
+        const new_blog = await model_blog.modelBlog.create(
             {
                 "title": request.body.title,
                 "author": request.body.author,
                 "url": request.body.url,
                 "likes": request.body.likes,
-                "owner": result0.user_name
+                "owner": resolved_user.user_name,
             }
         );
 
+        //add created blog id to users blogs area
+        await model_user.modelUser.findOneAndUpdate({ "user_name": resolved_user.user_name }, { "$push": { "blogs": new_blog._id } })
+
         response.statusCode = 201;
-        response.json(result1);
+        response.json(new_blog);
     }
     catch (err)
     {
@@ -71,18 +103,30 @@ router_blogs.delete('/:id', async (request, response) =>
 {
     try
     {
-        const result1 = await modelBlog.modelBlog.findByIdAndDelete(request.params.id);
+        let resolved_blog = await model_blog.modelBlog.findByIdAndDelete(request.params.id);
+        resolved_blog = resolved_blog.toJSON();
 
-        if (result1 === null)
+        if (resolved_blog === null)
         {
             response.statusCode = 404;
             response.end();
+            return;
         }
-        else
+
+
+
+        const updateStatus = await model_user.modelUser.updateOne({ "user_name": resolved_blog.owner }, { "$pull": { "blogs": resolved_blog._id } });
+
+        if (updateStatus.modifiedCount === 0)
         {
-            response.statusCode = 200;
+            response.statusCode = 503;
             response.end();
+            return;
         }
+
+        response.statusCode = 200;
+        response.end();
+
     }
     catch (err)
     {
@@ -96,7 +140,7 @@ router_blogs.put('/:id', async (request, response) =>
 {
     try
     {
-        await modelBlog.modelBlog.updateOne({ "_id": request.params.id }, request.body);
+        await model_blog.modelBlog.updateOne({ "_id": request.params.id }, request.body);
 
         response.statusCode = 200;
         response.end();
